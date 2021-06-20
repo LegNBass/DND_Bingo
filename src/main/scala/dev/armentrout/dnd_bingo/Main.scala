@@ -31,9 +31,15 @@ object Main extends App {
     Ok(Payload(Message(s)))
   }
 
+  def bingo: Endpoint[IO, Payload] = post("bingo") {
+    Ok(Payload(Message(
+      "This is a bingo board"
+    )))
+  }
+
   def service: Service[Request, Response] = Bootstrap
     .serve[Text.Plain](healthCheck)
-    .serve[Application.Json](helloWorld :+: hello)
+    .serve[Application.Json](helloWorld :+: hello :+: bingo)
     .toService
 
   Await.ready(Http.server.serve(":8081", service))
