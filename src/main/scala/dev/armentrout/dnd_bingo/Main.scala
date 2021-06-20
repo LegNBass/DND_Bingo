@@ -31,9 +31,9 @@ object Main extends App {
     Ok(Payload(Message(s)))
   }
 
-  def bingo: Endpoint[IO, Payload] = post("bingo") {
+  def bingo: Endpoint[IO, Payload] = post("bingo" :: stringBody) { data: String =>
     Ok(Payload(Message(
-      "This is a bingo board"
+      data
     )))
   }
 
